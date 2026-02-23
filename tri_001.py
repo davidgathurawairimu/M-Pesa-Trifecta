@@ -25,3 +25,15 @@ def main():
         user_input.append(line)
 
     results = extract_mpesa_data(user_input)
+    if results:
+        keys = results[0].keys()
+        with open('mpesa_exports.csv', 'w', newline='') as output_file:
+            dict_writer = csv.DictWriter(output_file, fieldnames=keys)
+            dict_writer.writeheader()
+            dict_writer.writerows(results)
+        print(f"\nSuccessfully exported {len(results)} records to 'mpesa_exports.csv'.")
+    else:
+        print("\nNo valid M-PESA transaction data found.")
+
+if __name__ == "__main__":
+    main()
